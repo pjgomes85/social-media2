@@ -1,5 +1,6 @@
 import Card from "../components/Card"
 import Sidebar from "@/components/Sidebar"
+import PostForm from "@/components/PostForm"
 // import { Inter } from '@next/font/google'
 
 
@@ -10,7 +11,7 @@ export default function Home() {
         <Sidebar/>
       </div>
       <div className='grow'>
-        <Card>form here</Card>
+        <PostForm />
         <Card>first post</Card>
       </div>
     </div>
