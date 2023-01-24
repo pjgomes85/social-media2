@@ -1,5 +1,3 @@
-import PostCard from "./PostCard";
-import PostForm from "./PostForm";
 import Sidebar from "./Sidebar";
 
 export default function Layout({children}) {
@@ -12,5 +10,5 @@ export default function Layout({children}) {
         {children}
       </div>
     </div>
-  )
+  );
 }
