@@ -24,10 +24,13 @@ export default function PostCard() {
             </svg>
           </button>
           <ClickOutHandler onClickOut={() => {}}>
-            <div>
+            <div className="relative">
               {dropdownOpen && (
-                <div >
-                  Dropdown menu
+                <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
+                  <a href="" className="href">Save Posts</a>
+                  <a href="" className="href">Turn Notifications</a>
+                  <a href="" className="href">Hide Posts</a>
+                  <a href="" className="href">Delete</a>
                 </div>
               )}
             </div>
