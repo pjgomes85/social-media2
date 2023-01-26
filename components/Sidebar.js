@@ -5,11 +5,11 @@ import Link from "next/link";
 export default function Sidebar() {
   const router = useRouter();
   const {asPath:pathname} = router;
-  const activeElementClasses = 'text-sm md:text-md flex md:gap-1 py-3 my-1 bg-socialBlue text-white md:-mx-10 px-6 md:px-10 rounded-md shadow-md shadow-gray-400';
-  const nonActiveElementClasses = 'text-sm md:text-md flex md:gap-1 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 -mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500';
+  const activeElementClasses = 'text-sm md:text-md flex md:gap-1 py-3 my-1 bg-socialBlue text-white md:-mx-8 px-6 md:px-8 rounded-md shadow-md shadow-gray-400';
+  const nonActiveElementClasses = 'text-sm md:text-md flex md:gap-1 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500';
   return (
-    <Card>
-      <div className="px-4 py-2 flex gap-4 justify-between md:block">
+    <Card noPadding={true}>
+      <div className="px-4 py-2 flex justify-between md:block shadow-md shadow-gray-400 md:shadow:none">
         <h2 className="text-gray-500 mb-3 hidden md:block">Navigation</h2>
           <Link href="/" className={pathname === '/' ? activeElementClasses : nonActiveElementClasses}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
