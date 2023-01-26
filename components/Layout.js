@@ -1,14 +1,20 @@
 import Sidebar from "./Sidebar";
 
 export default function Layout({children, hideSidebar}) {
+  let rightColumnClasses = '';
+  if (hideSidebar) {
+    rightColumnClasses += 'w-full';
+  } else {
+    rightColumnClasses += 'mx-4 md:mx-0 md:w-9/12';
+  }
   return (
     <div className='md:flex mt-4 max-w-4xl mx-auto gap-6'>
       {!hideSidebar && (
-        <div className='w-3/12'>
+        <div className='fixed md:static w-full md:w-3/12 -mb-5'>
         <Sidebar/>
       </div>
       )}
-      <div className={hideSidebar ? 'w-full' : 'md:w-9/12'}>
+      <div className={rightColumnClasses}>
         {children}
       </div>
     </div>
