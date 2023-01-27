@@ -1,6 +1,7 @@
 import Card from "./Card";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -8,8 +9,9 @@ export default function Sidebar() {
   const activeElementClasses = 'text-sm md:text-md flex md:gap-1 py-3 my-1 bg-socialBlue text-white md:-mx-8 px-6 md:px-8 rounded-md shadow-md shadow-gray-400';
   const nonActiveElementClasses = 'text-sm md:text-md flex md:gap-1 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500';
 
-  function logout() {
-
+  const supabase = useSupabaseClient();
+  async function logout() {
+    await supabase.auth.signOut();
   }
 
   return (
