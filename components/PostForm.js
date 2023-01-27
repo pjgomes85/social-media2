@@ -1,7 +1,14 @@
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Avatar from "./Avatar";
 import Card from "./Card";
 
 export default function PostForm() {
+  // const supabase = useSupabaseClient();
+  // const session = useSession();
+  // useEffect(effect: () => {
+  //   supabase.from(relation: 'profiles').select.eg(column: 'id' session.user.id)
+  // }, deps: []);
+
   return (
     <Card>
       <div className="flex gap-2">
