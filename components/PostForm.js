@@ -27,7 +27,7 @@ export default function PostForm() {
         <div>
           <Avatar url={profile?.avatar} />
         </div>
-        <textarea className="grow p-3 h-14" placeholder={'Whats on your mind, Paulo?'} />
+        <textarea className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}`} />
       </div>
       <div className="flex gap-6 items-center mt-2">
 
