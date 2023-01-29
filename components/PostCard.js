@@ -4,7 +4,7 @@ import ClickOutHandler from 'react-clickout-handler';
 import { useState } from "react";
 import Link from "next/link";
 
-export default function PostCard() {
+export default function PostCard({content}) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   function openDropdown(e) {
     e.stopPropagation();
@@ -87,7 +87,7 @@ export default function PostCard() {
         </div>
       </div>
       <div>
-        <p className="my-3 text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident asperiores tenetur repellat labore quod, nesciunt veniam earum? Eveniet, dolore itaque velit non cumque optio aliquid, quam quia, voluptatibus adipisci neque.</p>
+        <p className="my-3 text-sm">{content}</p>
         <div className="rounded-nd  overflow-hidden">
           <img src="https://images.unsplash.com/photo-1562760157-c05fe30e2e8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" alt="" />
         </div>

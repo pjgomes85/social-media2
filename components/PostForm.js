@@ -26,7 +26,10 @@ export default function PostForm() {
     supabase.from('posts').insert({
       author: session.user.id, content
       }).then(response => {
-        console.log(response);
+        if(!response.error) {
+          setContent('');
+          alert('created')
+        }
     });
   }
 
