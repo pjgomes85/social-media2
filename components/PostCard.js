@@ -20,7 +20,7 @@ export default function PostCard({content, profiles: profile}) {
         <div>
           <Link href={'/profile'}>
             <span className="cursor-pointer">
-              <Avatar url={profile.avatar}/>
+              <Avatar url={profile?.avatar} />
             </span>
           </Link>
         </div>
@@ -28,7 +28,7 @@ export default function PostCard({content, profiles: profile}) {
           <p>
             <Link href={'/profile'}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
-                {profile.name}
+                {profile?.name}
               </span>
             </Link>
              shared a <a className="text-socialBlue">album</a>

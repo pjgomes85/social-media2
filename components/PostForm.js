@@ -4,7 +4,7 @@ import Card from "./Card";
 import { useEffect, useState } from "react";
 
 
-export default function PostForm() {
+export default function PostForm({onPost}) {
   const [profile, setProfile] = useState(null);
   const [content, setContent] = useState('');
   const supabase = useSupabaseClient();
@@ -28,7 +28,9 @@ export default function PostForm() {
       }).then(response => {
         if(!response.error) {
           setContent('');
-          alert('created')
+          if (onPost) {
+            onPost()
+          }
         }
     });
   }
@@ -42,7 +44,7 @@ export default function PostForm() {
           <Avatar url={profile?.avatar} />
         </div>
         {profile && (
-          <textarea value={content} onChange={e => setContent(e.target.value)} className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}`} />
+          <textarea value={content} onChange={e => setContent(e.target.value)} className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}?`} />
         )}
       </div>
       <div className="flex gap-6 items-center mt-2">

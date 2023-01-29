@@ -14,22 +14,25 @@ export default function Home() {
   const session = useSession();
 
   useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  function fetchPosts() {
     supabase.from('posts')
     .select('id, content, created_at, profiles(id, avatar, name)')
     .order('created_at', {ascending: false})
     .then(result => {
-      console.log('posts', result)
       setPosts(result.data)
-    })
-  }, [])
+    });
+  }
 
   if (!session) {
     return <Login />
-  }
+  };
 
   return (
     <Layout>
-      <PostForm />
+      <PostForm onPost={fetchPosts} />
       { posts.map(post => (
         // eslint-disable-next-line react/jsx-key
         <PostCard key={post.created_at} {...post} />
