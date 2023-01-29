@@ -14,8 +14,11 @@ export default function Home() {
   const session = useSession();
 
   useEffect(() => {
-    supabase.from('posts').select()
+    supabase.from('posts')
+    .select('id, content, created_at, profiles(id, avatar, name)')
+    .order('created_at', {ascending: false})
     .then(result => {
+      console.log('posts', result)
       setPosts(result.data)
     })
   }, [])
@@ -27,9 +30,9 @@ export default function Home() {
   return (
     <Layout>
       <PostForm />
-      {posts.map(post => (
+      { posts.map(post => (
         // eslint-disable-next-line react/jsx-key
-        <PostCard {...post}/>
+        <PostCard key={post.created_at} {...post} />
       ))}
     </Layout>
   )

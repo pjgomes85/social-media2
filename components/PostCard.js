@@ -4,7 +4,7 @@ import ClickOutHandler from 'react-clickout-handler';
 import { useState } from "react";
 import Link from "next/link";
 
-export default function PostCard({content}) {
+export default function PostCard({content, profiles: profile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   function openDropdown(e) {
     e.stopPropagation();
@@ -20,7 +20,7 @@ export default function PostCard({content}) {
         <div>
           <Link href={'/profile'}>
             <span className="cursor-pointer">
-              <Avatar />
+              <Avatar url={profile.avatar}/>
             </span>
           </Link>
         </div>
@@ -28,7 +28,7 @@ export default function PostCard({content}) {
           <p>
             <Link href={'/profile'}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
-                Paulo Gomes
+                {profile.name}
               </span>
             </Link>
              shared a <a className="text-socialBlue">album</a>
