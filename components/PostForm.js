@@ -1,23 +1,34 @@
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { Result } from "postcss";
 import Avatar from "./Avatar";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 
 
 export default function PostForm() {
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(null);
+  const [content, setContent] = useState('');
   const supabase = useSupabaseClient();
   const session = useSession();
 
   useEffect(() => {
-    supabase.from('profiles').select().eq('id', session.user.id).then(result => {
+    supabase.from('profiles')
+    .select()
+    .eq('id', session.user.id)
+    .then(result => {
       if (result.data.length) {
         setProfile(result.data[0]);
       }
     })
-  }, []);
+  },[]);
 
+
+  function createPost() {
+    supabase.from('posts').insert({
+      author: session.user.id, content
+      }).then(response => {
+        console.log(response);
+    });
+  }
 
 
 
@@ -27,7 +38,9 @@ export default function PostForm() {
         <div>
           <Avatar url={profile?.avatar} />
         </div>
-        <textarea className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}`} />
+        {profile && (
+          <textarea value={content} onChange={e => setContent(e.target.value)} className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}`} />
+        )}
       </div>
       <div className="flex gap-6 items-center mt-2">
 
@@ -58,7 +71,7 @@ export default function PostForm() {
             </button>
           </div>
           <div className="grow text-right">
-            <button className="bg-socialBlue text-white px-6 py-1 rounded-md ">
+            <button onClick={createPost} className="bg-socialBlue text-white px-6 py-1 rounded-md ">
               Share
             </button>
           </div>
