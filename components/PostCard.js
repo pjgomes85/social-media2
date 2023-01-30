@@ -31,7 +31,7 @@ export default function PostCard({content, profiles: profile}) {
                 {profile?.name}
               </span>
             </Link>
-             shared a <a className="text-socialBlue">album</a>
+             shared a post
           </p>
           <p className="text-gray-500 text-sm">1 hours ago</p>
         </div>
