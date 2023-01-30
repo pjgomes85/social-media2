@@ -1,3 +1,4 @@
+import { UserContext } from "@/components/contexts/UserContext";
 import Layout from "@/components/Layout"
 import PostCard from "@/components/PostCard"
 import PostForm from "@/components/PostForm"
@@ -12,10 +13,26 @@ export default function Home() {
   const supabase = useSupabaseClient();
   const [posts,setPosts] = useState([]);
   const session = useSession();
+  const [profile,setProfile] = useState(null);
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+
+  useEffect(() => {
+    if (!session?.user?.id) {
+      return;
+    }
+    supabase.from('profiles')
+    .select()
+    .eq('id', session.user.id)
+    .then(result => {
+      if (result.data.length) {
+        setProfile(result.data[0]);
+      }
+    })
+  }, [session?.user?.id]);
 
   function fetchPosts() {
     supabase.from('posts')
@@ -32,11 +49,13 @@ export default function Home() {
 
   return (
     <Layout>
-      <PostForm onPost={fetchPosts} />
-      { posts.map(post => (
-        // eslint-disable-next-line react/jsx-key
-        <PostCard key={post.created_at} {...post} />
-      ))}
+      <UserContext.Provider value={{profile}} >
+        <PostForm onPost={fetchPosts} />
+        { posts.map(post => (
+          // eslint-disable-next-line react/jsx-key
+          <PostCard key={post.created_at} {...post} />
+        ))}
+      </UserContext.Provider>
     </Layout>
   )
 }

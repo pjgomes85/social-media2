@@ -117,7 +117,7 @@ export default function PostCard({content,created_at, profiles: profile}) {
       </div>
       <div className="flex mt-4 gap-3">
         <div>
-          <Avatar />
+          <Avatar url={profile?.avatar} />
         </div>
         <div className="border grow rounded-full relative">
           <textarea className="block w-full p-3 h-12 px-4 overflow-hidden rounded-full" placeholder="Leave comment"/>
