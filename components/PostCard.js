@@ -3,8 +3,9 @@ import Card from "./Card";
 import ClickOutHandler from 'react-clickout-handler';
 import { useState } from "react";
 import Link from "next/link";
+import ReactTimeAgo from "react-time-ago";
 
-export default function PostCard({content, profiles: profile}) {
+export default function PostCard({content,created_at, profiles: profile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   function openDropdown(e) {
     e.stopPropagation();
@@ -33,7 +34,9 @@ export default function PostCard({content, profiles: profile}) {
             </Link>
              shared a post
           </p>
-          <p className="text-gray-500 text-sm">1 hours ago</p>
+          <p className="text-gray-500 text-sm">
+            <ReactTimeAgo date={created_at} />
+            </p>
         </div>
         <div>
         {!dropdownOpen && (
