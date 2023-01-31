@@ -4,6 +4,7 @@ import ClickOutHandler from 'react-clickout-handler';
 import { useState } from "react";
 import Link from "next/link";
 import ReactTimeAgo from "react-time-ago";
+import React from 'react'
 
 export default function PostCard({content,created_at, profiles: profile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
