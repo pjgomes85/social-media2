@@ -1,13 +1,17 @@
 import Avatar from "./Avatar";
 import Card from "./Card";
 import ClickOutHandler from 'react-clickout-handler';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
-import ReactTimeAgo from "react-time-ago";
-import React from 'react'
+// import ReactTimeAgo from "react-time-ago";
+import React from 'react';
+import { UserContext } from "./contexts/UserContext";
 
-export default function PostCard({content,created_at, profiles: profile}) {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+
+export default function PostCard({content,created_at, profiles:authorProfile}) {
+  const {profile:myProfile} = useContext(UserContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   function openDropdown(e) {
     e.stopPropagation();
     setDropdownOpen(true)
@@ -22,7 +26,7 @@ export default function PostCard({content,created_at, profiles: profile}) {
         <div>
           <Link href={'/profile'}>
             <span className="cursor-pointer">
-              <Avatar url={profile?.avatar} />
+              <Avatar url={authorProfile.avatar} />
             </span>
           </Link>
         </div>
@@ -30,13 +34,13 @@ export default function PostCard({content,created_at, profiles: profile}) {
           <p>
             <Link href={'/profile'}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
-                {profile?.name}
+                {authorProfile.name}
               </span>
             </Link>
              shared a post
           </p>
           <p className="text-gray-500 text-sm">
-            <ReactTimeAgo date={created_at} />
+            {/* <ReactTimeAgo date={date} /> */}
             </p>
         </div>
         <div>
@@ -118,7 +122,7 @@ export default function PostCard({content,created_at, profiles: profile}) {
       </div>
       <div className="flex mt-4 gap-3">
         <div>
-          <Avatar url={profile?.avatar} />
+          <Avatar url={myProfile?.avatar} />
         </div>
         <div className="border grow rounded-full relative">
           <textarea className="block w-full p-3 h-12 px-4 overflow-hidden rounded-full" placeholder="Leave comment"/>
