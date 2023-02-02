@@ -7,6 +7,7 @@ import { UserContext } from "./contexts/UserContext";
 
 export default function PostForm({onPost}) {
   const [content, setContent] = useState('');
+  const [upload, setUpload] = useState([]);
   const supabase = useSupabaseClient();
   const session = useSession();
   const {profile} = useContext(UserContext);
@@ -17,10 +18,17 @@ export default function PostForm({onPost}) {
      for (const file of files) {
       const newName = Date.now() + file.name;
       supabase.storage.from('photos').upload(newName, file).then(result => {
-        console.log(result)
+        if (result.data) {
+          const url = process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/photos/' + result.data.path
+          setUpload(prevUploads => [...prevUploads,url]);
+        } else {
+          console.log(result)
+        }
       })
      }
   }
+
+
 
 
 
@@ -50,6 +58,15 @@ export default function PostForm({onPost}) {
           <textarea value={content} onChange={e => setContent(e.target.value)} className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}?`} />
         )}
       </div>
+      {upload.length > 0 && (
+        <div className="className">
+          {upload.map(uploads => (
+            <div className="">
+              <img src={uploads} alt="" className="w-auto h-24 rounded-md"/>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="flex gap-6 items-center mt-2">
 
           <div>
