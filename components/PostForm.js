@@ -12,6 +12,16 @@ export default function PostForm({onPost}) {
   const {profile} = useContext(UserContext);
   console.log(profile);
 
+  function addPhotos(ev) {
+    const files = ev.target.files;
+     for (const file of files) {
+      const newName = Date.now() + file.name;
+      supabase.storage.from('photos').upload(newName, file).then(result => {
+        console.log(result)
+      })
+     }
+  }
+
 
 
 
@@ -43,12 +53,13 @@ export default function PostForm({onPost}) {
       <div className="flex gap-6 items-center mt-2">
 
           <div>
-            <button className="flex gap-1">
+            <label className="flex gap-1">
+              <input type="file" className="hidden" multiple onChange={addPhotos}/>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
-              <span className="hidden md:block">People</span>
-            </button>
+              <span className="hidden md:block">Photos</span>
+            </label>
           </div>
 
           <div>

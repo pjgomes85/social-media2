@@ -3,7 +3,7 @@ import Card from "./Card";
 import ClickOutHandler from 'react-clickout-handler';
 import { useContext, useState } from "react";
 import Link from "next/link";
-// import ReactTimeAgo from "react-time-ago";
+import ReactTimeAgo from "react-time-ago";
 import React from 'react';
 import { UserContext } from "./contexts/UserContext";
 
@@ -26,7 +26,7 @@ export default function PostCard({content,created_at, profiles:authorProfile}) {
         <div>
           <Link href={'/profile'}>
             <span className="cursor-pointer">
-              <Avatar url={authorProfile.avatar} />
+              <Avatar url={authorProfile?.avatar} />
             </span>
           </Link>
         </div>
@@ -34,13 +34,13 @@ export default function PostCard({content,created_at, profiles:authorProfile}) {
           <p>
             <Link href={'/profile'}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
-                {authorProfile.name}
+                {authorProfile?.name}
               </span>
             </Link>
              shared a post
           </p>
           <p className="text-gray-500 text-sm">
-            {/* <ReactTimeAgo date={date} /> */}
+            <ReactTimeAgo date={created_at} />
             </p>
         </div>
         <div>
