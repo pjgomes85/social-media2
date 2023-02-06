@@ -1,31 +1,39 @@
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Avatar from "./Avatar";
 import Card from "./Card";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
+import Preloader from "./Preloader";
 
 
 export default function PostForm({onPost}) {
   const [content, setContent] = useState('');
   const [upload, setUpload] = useState([]);
+  const [isUploading, setIsUploading] = useState(false)
   const supabase = useSupabaseClient();
   const session = useSession();
   const {profile} = useContext(UserContext);
   console.log(profile);
 
-  function addPhotos(ev) {
+  async function addPhotos(ev) {
     const files = ev.target.files;
-     for (const file of files) {
-      const newName = Date.now() + file.name;
-      supabase.storage.from('photos').upload(newName, file).then(result => {
+    if (files.length > 0) {
+      setIsUploading(true);
+      for (const file of files) {
+        const newName = Date.now() + file.name;
+        const result = await supabase
+        .storage
+        .from('photos')
+        .upload(newName, file);
         if (result.data) {
           const url = process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/photos/' + result.data.path
           setUpload(prevUploads => [...prevUploads,url]);
         } else {
           console.log(result)
         }
-      })
-     }
+       }
+       setIsUploading(false);
+    }
   }
 
 
@@ -58,11 +66,16 @@ export default function PostForm({onPost}) {
           <textarea value={content} onChange={e => setContent(e.target.value)} className="grow p-3 h-14" placeholder={`Whats on your mind, ${profile?.name}?`} />
         )}
       </div>
+      {isUploading && (
+        <div>
+          <Preloader />
+        </div>
+      )}
       {upload.length > 0 && (
-        <div className="className">
+        <div className="flex gap-2">
           {upload.map(uploads => (
             <div className="">
-              <img src={uploads} alt="" className="w-auto h-24 rounded-md"/>
+              <img src={uploads} alt="" className="w-auto h-24 rounded-md" />
             </div>
           ))}
         </div>
