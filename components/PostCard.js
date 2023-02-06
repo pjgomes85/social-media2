@@ -96,9 +96,16 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
       </div>
       <div>
         <p className="my-3 text-sm">{content}</p>
-        {photos?.length > 0 && photos.map(photo => (
-          <div>{photo}</div>
-        ))}
+        {photos?.length > 0 && (
+          <div className="flex gap-4">
+          {photos.map(photo => (
+            <div className="">
+              <img src={photo} className="rounded-md" alt=""></img>
+            </div>
+          ))}
+        </div>
+        )}
+
         {/* <div className="rounded-nd  overflow-hidden">
           <img src="https://images.unsplash.com/photo-1562760157-c05fe30e2e8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" alt="" />
         </div> */}
