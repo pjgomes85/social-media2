@@ -5,9 +5,31 @@ import Link from "next/link";
 import PostCard from "@/components/PostCard";
 import { useRouter } from "next/router";
 import FriendInfo from "@/components/FriendInfo";
+import { useEffect,useState } from "react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function ProfilePage() {
+  const [profile, setProfile] = useState(null);
   const router = useRouter();
+  const supabase = useSupabaseClient();
+
+  const userId = router.query.id;
+
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    supabase.from('profiles').select().eq('id', userId).then(result => {
+      if (result.error) {
+        throw result.error;
+      }
+      if (result.data) {
+        setProfile(result.data[0])
+      }
+    })
+  }, [userId]);
+
+
   const {asPath:pathname} = router;
   const isPosts = pathname.includes('posts') || pathname === '/profile';
   const isAbout = pathname.includes('about');
@@ -31,7 +53,7 @@ export default function ProfilePage() {
           <div className="p-4 pt-0 md:pt-4 pb-0">
             <div className="ml-24 md:ml-40">
               <h1 className="text-2xl font-bold">
-                Paulo Gomes
+                {profile?.name}
               </h1>
               <div className="text-gray-500 leading-4">Cascais, Portugal</div>
             </div>
