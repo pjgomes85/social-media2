@@ -15,6 +15,7 @@ export default function PostForm({onPost}) {
   const {profile} = useContext(UserContext);
   console.log(profile);
 
+
   async function addPhotos(ev) {
     const files = ev.target.files;
     if (files.length > 0) {
@@ -43,10 +44,13 @@ export default function PostForm({onPost}) {
 
   function createPost() {
     supabase.from('posts').insert({
-      author: session.user.id, content
+      author: session.user.id,
+      content,
+      photos: upload,
       }).then(response => {
         if(!response.error) {
           setContent('');
+          setUpload([]);
           if (onPost) {
             onPost()
           }
@@ -74,7 +78,7 @@ export default function PostForm({onPost}) {
       {upload.length > 0 && (
         <div className="flex gap-2">
           {upload.map(uploads => (
-            <div className="">
+            <div className="mt-2">
               <img src={uploads} alt="" className="w-auto h-24 rounded-md" />
             </div>
           ))}

@@ -8,7 +8,7 @@ import React from 'react';
 import { UserContext } from "./contexts/UserContext";
 
 
-export default function PostCard({content,created_at, profiles:authorProfile}) {
+export default function PostCard({content,created_at,photos,profiles:authorProfile}) {
   const {profile:myProfile} = useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -96,9 +96,12 @@ export default function PostCard({content,created_at, profiles:authorProfile}) {
       </div>
       <div>
         <p className="my-3 text-sm">{content}</p>
-        <div className="rounded-nd  overflow-hidden">
+        {photos?.length > 0 && photos.map(photo => (
+          <div>{photo}</div>
+        ))}
+        {/* <div className="rounded-nd  overflow-hidden">
           <img src="https://images.unsplash.com/photo-1562760157-c05fe30e2e8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" alt="" />
-        </div>
+        </div> */}
       </div>
       <div className="flex mt-4 gap-8">
         <button className="flex gap-2 items-center">

@@ -36,7 +36,7 @@ export default function Home() {
 
   function fetchPosts() {
     supabase.from('posts')
-    .select('id, content, created_at, profiles(id, avatar, name)')
+    .select('id, content, created_at, photos, profiles(id, avatar, name)')
     .order('created_at', {ascending: false})
     .then(result => {
       setPosts(result.data)
@@ -51,7 +51,7 @@ export default function Home() {
     <Layout>
       <UserContext.Provider value={{profile}} >
         <PostForm onPost={fetchPosts} />
-        { posts.map(post => (
+        {posts?.length > 0 && posts.map(post => (
           // eslint-disable-next-line react/jsx-key
           <PostCard key={post.created_at} {...post} />
         ))}
