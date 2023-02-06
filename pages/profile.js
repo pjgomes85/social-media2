@@ -48,7 +48,9 @@ export default function ProfilePage() {
             <img src="https://images.unsplash.com/photo-1595838133174-a772f5358609?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="" className="src" />
           </div>
           <div className="absolute top-24 left-4">
-            <Avatar size={'lg'}/>
+            {profile && (
+              <Avatar url={profile.avatar} size={'lg'}/>
+            )}
           </div>
           <div className="p-4 pt-0 md:pt-4 pb-0">
             <div className="ml-24 md:ml-40">
