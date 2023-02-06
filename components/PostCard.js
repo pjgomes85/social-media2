@@ -32,7 +32,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
         </div>
         <div className="grow">
           <p>
-            <Link href={'/profile'}>
+            <Link href={'/profile/'+authorProfile.id}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
                 {authorProfile?.name}
               </span>
@@ -100,7 +100,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
           <div className="flex gap-4">
           {photos.map(photo => (
             <div className="">
-              <img src={photo} className="rounded-md" alt=""></img>
+              <img src={photo} className="rounded-md" alt=""/>
             </div>
           ))}
         </div>
