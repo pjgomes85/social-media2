@@ -4,9 +4,10 @@ import Preloader from "./Preloader";
 
 
 export default function Cover({url, editable}) {
-  const session = useSession;
+  const session = useSession();
   const supabase = useSupabaseClient();
   const [isUploading, setIsUploading] = useState(false);
+
   async function updateCover(ev) {
     const file = ev.target.files?.[0];
     if (file) {
