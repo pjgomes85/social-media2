@@ -1,20 +1,32 @@
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Preloader from "./Preloader";
 
 
 export default function Cover({url, editable}) {
+  const session = useSession;
   const supabase = useSupabaseClient();
-  const [isUploading, setIsUploading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
   async function updateCover(ev) {
     const file = ev.target.files?.[0];
     if (file) {
+      setIsUploading(true)
       const newName = Date.now() + file.name;
       const {data,error} = await supabase.storage.from('covers').upload(newName,file)
 
+      setIsUploading(false)
+
       if (error) throw error
       if (data) {
-        console.log(data);
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/photos/' + data.path
+        supabase.from('profiles').update({
+          cover: url,
+        })
+        .eq('id', session.user?.id)
+        .then(({data,error}) => {
+          if (error) throw error
+          console.log(data)
+        })
       }
     }
   }
@@ -24,7 +36,7 @@ export default function Cover({url, editable}) {
         {<img src={url} alt="" className="src" />}
       </div>
       {isUploading && (
-        <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center ">
+        <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center z-10">
           <div className="inline-block mx-auto">
             <Preloader />
           </div>
