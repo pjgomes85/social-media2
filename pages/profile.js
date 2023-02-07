@@ -55,7 +55,7 @@ export default function ProfilePage() {
           <Cover url={profile?.cover} editable={isMyUSer} onChange={fetchUser} />
           <div className="absolute top-24 left-4 z-20">
             {profile && (
-              <Avatar url={profile.avatar} size={'lg'}/>
+              <Avatar url={profile.avatar} size={'lg'} editable={isMyUSer} onChange={fetchUser}/>
             )}
           </div>
           <div className="p-4 pt-0 md:pt-4 pb-0">
