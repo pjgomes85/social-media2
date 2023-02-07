@@ -15,6 +15,7 @@ export default function Cover({url, editable, onChange}) {
       setIsUploading(true);
       await uploadUserProfileImage(supabase, session.user.id, file,'covers', 'cover');
       setIsUploading(false);
+      if (onChange) onCghange();
     }
   }
   return (
