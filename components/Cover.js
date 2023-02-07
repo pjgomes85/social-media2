@@ -3,7 +3,7 @@ import { useState } from "react";
 import Preloader from "./Preloader";
 
 
-export default function Cover({url, editable}) {
+export default function Cover({url, editable, onChange}) {
   const session = useSession();
   const supabase = useSupabaseClient();
   const [isUploading, setIsUploading] = useState(false);
@@ -19,14 +19,14 @@ export default function Cover({url, editable}) {
 
       if (error) throw error
       if (data) {
-        const url = process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/photos/' + data.path
+        const url = process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/covers/' + data.path
         supabase.from('profiles').update({
           cover: url,
         })
         .eq('id', session.user?.id)
-        .then(({data,error}) => {
-          if (error) throw error
-          console.log(data)
+        .then(result => {
+          if (!result.error && onChange)
+          onChange();
         })
       }
     }

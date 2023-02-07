@@ -11,6 +11,7 @@ import Cover from "@/components/Cover";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
+  console.log(profile)
   const router = useRouter();
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -21,6 +22,10 @@ export default function ProfilePage() {
     if (!userId) {
       return;
     }
+    fetchUser()
+  }, [userId]);
+
+  function fetchUser() {
     supabase.from('profiles').select().eq('id', userId).then(result => {
       if (result.error) {
         throw result.error;
@@ -29,7 +34,7 @@ export default function ProfilePage() {
         setProfile(result.data[0])
       }
     })
-  }, [userId]);
+  }
 
 
   const {asPath:pathname} = router;
@@ -47,7 +52,7 @@ export default function ProfilePage() {
     <Layout>
       <Card noPadding={true}>
         <div className="relative overflow-hidden rounded-md">
-          <Cover url={profile?.cover} editable={isMyUSer} />
+          <Cover url={profile?.cover} editable={isMyUSer} onChange={fetchUser} />
           <div className="absolute top-24 left-4 z-20">
             {profile && (
               <Avatar url={profile.avatar} size={'lg'}/>
