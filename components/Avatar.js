@@ -1,6 +1,13 @@
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+
 export default function Avatar({size,url,editable,onChange}) {
-  function changeAvatar(ev) {
-    
+  const supabase = useSupabaseClient();
+  const session = useSession()
+  async function changeAvatar(ev) {
+    const file = ev.target.files?.[0];
+    if (file) {
+      await changeAvatar(supabase, session.user.id,file,'avatars', 'avatar')
+    }
   }
 
   let width = 'w-12';

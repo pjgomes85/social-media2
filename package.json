@@ -12,7 +12,7 @@
     "@next/font": "13.1.4",
     "@supabase/auth-helpers-nextjs": "^0.5.4",
     "@supabase/auth-helpers-react": "^0.3.1",
-    "@supabase/supabase-js": "^2.4.1",
+    "@supabase/supabase-js": "^2.7.1",
     "autoprefixer": "^10.4.13",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
