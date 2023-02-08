@@ -1,10 +1,10 @@
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
-import { uploadUserProfileImage } from "./helpers/User";
+import { uploadUserProfileImage } from "../helpers/User";
 import Preloader from "./Preloader";
 
 
-export default function Cover({url, editable, onChange}) {
+export default function Cover({url,editable,onChange}) {
   const session = useSession();
   const supabase = useSupabaseClient();
   const [isUploading, setIsUploading] = useState(false);
@@ -15,7 +15,7 @@ export default function Cover({url, editable, onChange}) {
       setIsUploading(true);
       await uploadUserProfileImage(supabase, session.user.id, file,'covers', 'cover');
       setIsUploading(false);
-      if (onChange) onCghange();
+      if (onChange) onChange();
     }
   }
   return (

@@ -9,6 +9,7 @@ import { useEffect,useState } from "react";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Cover from "@/components/Cover";
 
+
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   console.log(profile)
@@ -26,15 +27,19 @@ export default function ProfilePage() {
   }, [userId]);
 
   function fetchUser() {
-    supabase.from('profiles').select().eq('id', userId).then(result => {
-      if (result.error) {
-        throw result.error;
-      }
-      if (result.data) {
-        setProfile(result.data[0])
-      }
-    })
+    supabase.from('profiles')
+      .select()
+      .eq('id', userId)
+      .then(result => {
+        if (result.error) {
+          throw result.error;
+        }
+        if (result.data) {
+          setProfile(result.data[0]);
+        }
+      });
   }
+
 
 
   const {asPath:pathname} = router;
@@ -45,17 +50,17 @@ export default function ProfilePage() {
   const tabClasses = 'p-3 flex gap-1 px-4 py-1 border-b-4 border-b-white items-center';
   const activeTabClasses = "p-3 flex gap-1 px-4 py-1 items-center border-socialBlue border-b-4 text-socialBlue font-bold";
 
-  const isMyUSer = userId === session?.user?.id;
+  const isMyUser = userId === session?.user?.id;
 
   return (
 
     <Layout>
       <Card noPadding={true}>
         <div className="relative overflow-hidden rounded-md">
-          <Cover url={profile?.cover} editable={isMyUSer} onChange={fetchUser} />
+          <Cover url={profile?.cover} editable={isMyUser} onChange={fetchUser} />
           <div className="absolute top-24 left-4 z-20">
             {profile && (
-              <Avatar url={profile.avatar} size={'lg'} editable={isMyUSer} onChange={fetchUser}/>
+              <Avatar url={profile.avatar} size={'lg'} editable={isMyUser} onChange={fetchUser}/>
             )}
           </div>
           <div className="p-4 pt-0 md:pt-4 pb-0">
