@@ -13,6 +13,7 @@ import Cover from "@/components/Cover";
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [editMode, setEditMode] = useState(null);
+  const [name, setName] = useState('');
   const router = useRouter();
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -67,14 +68,22 @@ export default function ProfilePage() {
           <div className="p-4 pt-0 md:pt-4 pb-0">
             <div className="ml-24 md:ml-40 flex justify-between">
               <div>
-                <h1 className="text-2xl font-bold">
-                  {!editMode && profile?.name}
-                  {editMode && (
+              {editMode && (
                     <div>
-                      <input type="text" placeholder="Your Name" value={} />
+                      <input type="text"
+                      className="border py-2 px-3 rounded-md"
+                      placeholder="Your Name"
+                      value={name}
+                      onChange={ev => setName(ev.target.value)}
+                      />
                     </div>
                   )}
+              {!editMode && (
+                <h1 className="text-2xl font-bold">
+                  {profile?.name}
                 </h1>
+              )}
+
                 <div className="text-gray-500 leading-4">
                   {profile?.place || 'Internet'}
                 </div>
