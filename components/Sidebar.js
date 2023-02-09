@@ -6,8 +6,8 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 export default function Sidebar() {
   const router = useRouter();
   const {asPath:pathname} = router;
-  const activeElementClasses = 'text-sm md:text-md flex md:gap-1 py-3 my-1 bg-socialBlue text-white md:-mx-8 px-6 md:px-8 rounded-md shadow-md shadow-gray-400';
-  const nonActiveElementClasses = 'text-sm md:text-md flex md:gap-1 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500';
+  const activeElementClasses = 'text-sm md:text-md flex md:gap-1 py-3 my-1 bg-fortactive text-white md:-mx-8 px-6 md:px-8 rounded-md shadow-md shadow-gray-400';
+  const nonActiveElementClasses = 'text-sm md:text-md flex md:gap-1 py-2 my-2 hover:bg-white hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500 text-white';
 
   const supabase = useSupabaseClient();
   async function logout() {
@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   return (
     <Card noPadding={true}>
-      <div className="px-4 py-2 flex justify-between md:block shadow-md shadow-gray-400 md:shadow:none">
+      <div className="px-4 py-2 flex justify-between md:block shadow-md shadow-gray-400 md:shadow:none bg-fortbg rounded-md">
         <h2 className="text-gray-500 mb-3 hidden md:block">Navigation</h2>
           <Link href="/" className={pathname === '/' ? activeElementClasses : nonActiveElementClasses}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -43,7 +43,7 @@ export default function Sidebar() {
             <span className="hidden md:block">Notifications</span>
           </Link>
           <button onClick={logout} className="w-full -my-2">
-            <span className={nonActiveElementClasses}>
+            <span className={nonActiveElementClasses} >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
               </svg>

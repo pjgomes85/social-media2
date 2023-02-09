@@ -10,6 +10,8 @@ module.exports = {
       colors: {
         socialBg:'#F5F7FB',
         socialBlue: '#218DFA',
+        fortactive: '#0840a7',
+        fortbg: '#0e1734',
       },
     },
   },

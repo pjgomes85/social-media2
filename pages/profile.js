@@ -138,7 +138,7 @@ export default function ProfilePage() {
                       </button>
                   ) }
                   {isMyUser && editMode && (
-                      <button onClick={saveProfile} className="inline-flex mx-1 gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
+                      <button onClick={() => setEditMode(false)} className="inline-flex mx-1 gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
                         Cancel
                       </button>
                   ) }
