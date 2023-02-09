@@ -3,7 +3,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useState } from "react";
 import Preloader from "./Preloader";
 
-export default function Avatar({size,url,editable,onChange}) {
+export default function Avatar({size, url, editable,onChange}) {
   const supabase = useSupabaseClient();
   const session = useSession();
   const [isUploading,setIsUploading] = useState(false);
@@ -15,15 +15,17 @@ export default function Avatar({size,url,editable,onChange}) {
       setIsUploading(false);
       if (onChange) onChange();
     }
-  }
+  };
+
   let width = 'w-12';
   if (size === 'lg') {
-    width = 'w-12 md:w-40';
-  }
+    width = `w-24 md:w-36`;
+  };
+
   return (
     <div className={`${width} relative`}>
       <div className="rounded-full overflow-hidden">
-        <img src={url} alt="" className="w-full" />
+        <img src={url} alt="" className="w-full"/>
       </div>
       {isUploading && (
         <div className="absolute inset-0 flex items-center bg-white bg-opacity-50 rounded-full">

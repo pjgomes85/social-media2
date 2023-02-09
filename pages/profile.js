@@ -60,16 +60,25 @@ export default function ProfilePage() {
           <Cover url={profile?.cover} editable={isMyUser} onChange={fetchUser} />
           <div className="absolute top-24 left-4 z-20">
             {profile && (
-              <Avatar url={profile?.avatar} size={'lg'} editable={isMyUser} onChange={fetchUser}/>
+              <Avatar url={profile.avatar} size={'lg'} editable={isMyUser} onChange={fetchUser}/>
             )}
           </div>
+
           <div className="p-4 pt-0 md:pt-4 pb-0">
-            <div className="ml-24 md:ml-40">
-              <h1 className="text-2xl font-bold">
-                {profile?.name}
-              </h1>
-              <div className="text-gray-500 leading-4">{profile?.place}</div>
+            <div className="ml-24 md:ml-40 flex justify-between">
+              <div>
+                <h1 className="text-2xl font-bold">
+                  {profile?.name}
+                </h1>
+                <div className="text-gray-500 leading-4">
+                  {profile?.place || 'Internet'}
+                </div>
+              </div>
+              <div>
+                Test
+              </div>
             </div>
+
             <div className="mt-4 md:mt-10 flex gap-1">
             <Link href={'/profile/posts'} className={isPosts ? activeTabClasses : tabClasses}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

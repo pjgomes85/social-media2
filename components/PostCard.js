@@ -26,7 +26,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
         <div>
           <Link href={'/profile'}>
             <span className="cursor-pointer">
-              <Avatar url={authorProfile?.avatar} />
+              <Avatar url={authorProfile?.avatar}  />
             </span>
           </Link>
         </div>
