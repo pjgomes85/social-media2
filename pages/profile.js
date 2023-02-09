@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [editMode, setEditMode] = useState(null);
   const [name, setName] = useState('');
+  const [place, setPlace] = useState('');
   const router = useRouter();
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -39,6 +40,20 @@ export default function ProfilePage() {
           setProfile(result.data[0]);
         }
       });
+  }
+
+  function saveProfile() {
+    supabase.from('profiles').update({
+      name,
+      place,
+    })
+    .eq('id', session.user.id)
+    .then(result => {
+      if (!result.error) {
+        setProfile(prev => ({...prev,name,place}));
+        }
+        setEditMode(false)
+    })
   }
 
 
@@ -84,13 +99,32 @@ export default function ProfilePage() {
                 </h1>
               )}
 
+              {!editMode && (
                 <div className="text-gray-500 leading-4">
                   {profile?.place || 'Internet'}
                 </div>
+              )}
+              {editMode && (
+                    <div>
+                      <input type="text"
+                      className="border py-2 px-3 rounded-md mt-1"
+                      placeholder="Your location"
+                      value={place}
+                      onChange={ev => setPlace(ev.target.value)}
+                      />
+                    </div>
+                  )}
+
               </div>
               <div>
                 {isMyUser && !editMode && (
-                  <button onClick={() => setEditMode(true)} className="flex gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
+                  <button onClick={() => {
+                    setEditMode(true);
+                    setName(profile.name);
+                    setPlace(profile.place);
+
+                  }}
+                  className="flex gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
@@ -99,7 +133,7 @@ export default function ProfilePage() {
                 )}
                 {isMyUser && editMode && (
                   <div>
-                    <button onClick={() => setEditMode(true)} className="flex gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
+                    <button onClick={saveProfile} className="flex gap-1 bg-white rounded-md shadow-sm shadow-gray-500 py-1 px-2">
                       Save Profile
                     </button>
                   </div>
