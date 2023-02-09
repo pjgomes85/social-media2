@@ -18,12 +18,12 @@ export default function Avatar({size,url,editable,onChange}) {
   }
   let width = 'w-12';
   if (size === 'lg') {
-    width = 'w-24 md:w-36';
+    width = 'w-12 md:w-40';
   }
   return (
     <div className={`${width} relative`}>
       <div className="rounded-full overflow-hidden">
-        <img src={url} alt="" className="w-full"/>
+        <img src={url} alt="" className="w-full" />
       </div>
       {isUploading && (
         <div className="absolute inset-0 flex items-center bg-white bg-opacity-50 rounded-full">
