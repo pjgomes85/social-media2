@@ -12,6 +12,7 @@ module.exports = {
         socialBlue: '#218DFA',
         fortactive: '#0840a7',
         fortbg: '#0e1734',
+        fortcard: '#1f1f23'
       },
     },
   },

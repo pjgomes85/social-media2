@@ -99,6 +99,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
         {photos?.length > 0 && (
           <div className="flex gap-4">
           {photos.map(photo => (
+            // eslint-disable-next-line react/jsx-key
             <div className="">
               <img src={photo} className="rounded-md" alt=""/>
             </div>

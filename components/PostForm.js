@@ -78,6 +78,7 @@ export default function PostForm({onPost}) {
       {upload.length > 0 && (
         <div className="flex gap-2">
           {upload.map(uploads => (
+            // eslint-disable-next-line react/jsx-key
             <div className="mt-2">
               <img src={uploads} alt="" className="w-auto h-24 rounded-md" />
             </div>
