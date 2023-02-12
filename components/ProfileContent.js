@@ -6,27 +6,46 @@ import PostCard from "./PostCard";
 
 export default function ProfileContent({activeTab,userId}) {
   const [posts,setPosts] = useState([]);
-  const supabase = useSupabaseClient()
-  useEffect(() => {
+  const supabase = useSupabaseClient();
+
+  useEffect(async () => {
     if (!userId) {
       return;
     }
-    supabase.from('posts').select('id, content, created_at, profiles(id, name, avatar)')
-    .eq('profiles.id', userId)
-    .then(result => {
-      console.log(result)
-    })
+    if (activeTab === 'posts') {
+      loadPosts().then(({posts,profile}) => {
+        
+      })
+    }
   }, [userId]);
+
+  async function loadPosts() {
+    const posts = await userPosts(userId);
+    const profile = await userProfile(userId);
+    return {posts,profile};
+  }
+
+  async function userPosts(userId) {
+    const {data} = await supabase.from('posts').select('id, content, created_at, author)')
+    .eq('author', userId);
+    return data;
+  }
+
+  async function userProfile(userId) {
+    const {data} = await supabase.from('profiles').select()
+    .eq('author', userId);
+    return data[0];
+  }
 
   return (
     <div>
-      {activeTab === `posts` && (
+      {activeTab === 'posts' && (
       <div>
         postsgggg
         {/* <PostCard /> */}
       </div>
      )}
-     {activeTab === `about` && (
+     {activeTab === 'about' && (
       <div>
         <Card>
           <div>
@@ -37,7 +56,7 @@ export default function ProfileContent({activeTab,userId}) {
         </Card>
       </div>
      )}
-     {activeTab === `friends` && (
+     {activeTab === 'friends' && (
       <div>
         <Card>
           <h2 className="text-3xl mb-2">Friends</h2>
@@ -73,7 +92,7 @@ export default function ProfileContent({activeTab,userId}) {
         </Card>
       </div>
      )}
-     {activeTab === `photos` && (
+     {activeTab === 'photos' && (
       <div>
         <Card>
           <div className="grid md:grid-cols-2 gap-4">
