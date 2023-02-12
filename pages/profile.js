@@ -17,6 +17,7 @@ export default function ProfilePage() {
   const [name, setName] = useState('');
   const [place, setPlace] = useState('');
   const router = useRouter();
+  const tab = router?.query.tab?.[0] || `Posts`;
   const session = useSession();
   const supabase = useSupabaseClient();
   const userId = router.query.id;
@@ -136,7 +137,7 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-            <ProfileTabs userId={profile?.id}/>
+            <ProfileTabs active={tab} userId={profile?.id}/>
           </div>
         </div>
       </Card>
