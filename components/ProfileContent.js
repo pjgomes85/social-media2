@@ -1,16 +1,32 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import FriendInfo from "./FriendInfo";
 import PostCard from "./PostCard";
 
-export default function ProfileContent() {
+export default function ProfileContent({activeTab,userId}) {
+  const [posts,setPosts] = useState([]);
+  const supabase = useSupabaseClient()
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    supabase.from('posts').select('id, content, created_at, profiles(id, name, avatar)')
+    .eq('profiles.id', userId)
+    .then(result => {
+      console.log(result)
+    })
+  }, [userId]);
+
   return (
     <div>
-      {isPosts && (
+      {activeTab === `posts` && (
       <div>
-        <PostCard />
+        postsgggg
+        {/* <PostCard /> */}
       </div>
      )}
-     {isAbout && (
+     {activeTab === `about` && (
       <div>
         <Card>
           <div>
@@ -21,7 +37,7 @@ export default function ProfileContent() {
         </Card>
       </div>
      )}
-     {isFriends && (
+     {activeTab === `friends` && (
       <div>
         <Card>
           <h2 className="text-3xl mb-2">Friends</h2>
@@ -57,7 +73,7 @@ export default function ProfileContent() {
         </Card>
       </div>
      )}
-     {isPhotos && (
+     {activeTab === `photos` && (
       <div>
         <Card>
           <div className="grid md:grid-cols-2 gap-4">

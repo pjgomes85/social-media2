@@ -9,6 +9,7 @@ import { useEffect,useState } from "react";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Cover from "@/components/Cover";
 import ProfileTabs from "@/components/ProfileTabs";
+import ProfileContent from "@/components/ProfileContent";
 
 
 export default function ProfilePage() {
@@ -141,7 +142,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </Card>
-
+      <ProfileContent activeTab={tab} userId={userId} />
     </Layout>
 
   );
