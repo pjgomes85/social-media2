@@ -33,7 +33,7 @@ export default function ProfileContent({activeTab,userId}) {
 
   async function userProfile(userId) {
     const {data} = await supabase.from('profiles').select()
-    .eq('author', userId);
+    .eq('id', userId);
     return data[0];
   }
 
@@ -44,7 +44,7 @@ export default function ProfileContent({activeTab,userId}) {
         {posts.length > 0 && posts.map(post => (
           <PostCard {...post} profiles={profile} />
         ))}
-        {/* <PostCard /> */}
+
       </div>
      )}
      {activeTab === 'about' && (
