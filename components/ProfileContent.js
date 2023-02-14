@@ -42,7 +42,7 @@ export default function ProfileContent({activeTab,userId}) {
       {activeTab === 'posts' && (
       <div>
         {posts.length > 0 && posts.map(post => (
-          <PostCard key={post.created_at} {...post} profiles={profile} />
+          <PostCard key={post.created_at} {...post} profiles={profile} url={profile?.avatar} />
         ))}
 
       </div>
