@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import Link from "next/link";
 import ReactTimeAgo from "react-time-ago";
 import React from 'react';
-import { UserContext } from "./contexts/UserContext";
+import { UserContext } from "./context/UserContext";
 
 
 export default function PostCard({content,created_at,photos,profiles:authorProfile}) {

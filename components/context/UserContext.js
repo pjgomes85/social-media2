@@ -18,8 +18,8 @@ export function UserContextProvider({children}) {
   }, [session?.user?.id]);
 
   return (
-    <UserContextProvider value={{profile}}>
+    <UserContext.Provider value={{profile}}>
       {children}
-    </UserContextProvider>
+    </UserContext.Provider>
   )
 }

@@ -2,7 +2,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Avatar from "./Avatar";
 import Card from "./Card";
 import { useState, useContext } from "react";
-import { UserContext } from "./contexts/UserContext";
+import { UserContext } from "./context/UserContext";
 import Preloader from "./Preloader";
 
 
