@@ -9,7 +9,7 @@ export default function ProfileContent({activeTab,userId}) {
   const [profile, setProfile] = useState(null);
   const supabase = useSupabaseClient();
 
-  useEffect(async () => {
+  useEffect( () => {
     if (!userId) {
       return;
     }
@@ -41,7 +41,9 @@ export default function ProfileContent({activeTab,userId}) {
     <div>
       {activeTab === 'posts' && (
       <div>
-        postsgggg
+        {posts.length > 0 && posts.map(post => (
+          <PostCard {...post} profiles={profile} />
+        ))}
         {/* <PostCard /> */}
       </div>
      )}
