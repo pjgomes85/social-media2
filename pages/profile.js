@@ -10,7 +10,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Cover from "@/components/Cover";
 import ProfileTabs from "@/components/ProfileTabs";
 import ProfileContent from "@/components/ProfileContent";
-import { UserContextProvider } from "@/components/context/UserContext";
+import { UserContextProvider } from "@/components/contexts/UserContext";
 
 
 export default function ProfilePage() {

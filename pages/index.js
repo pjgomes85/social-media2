@@ -1,4 +1,4 @@
-import { UserContext } from "@/components/context/UserContext";
+import { UserContext } from "@/components/contexts/UserContext";
 import Layout from "@/components/Layout"
 import PostCard from "@/components/PostCard"
 import PostForm from "@/components/PostForm"
