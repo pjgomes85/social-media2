@@ -26,7 +26,7 @@ export default function ProfileContent({activeTab,userId}) {
   }
 
   async function userPosts(userId) {
-    const {data} = await supabase.from('posts').select('id, content, created_at, author)')
+    const {data} = await supabase.from('posts').select('id, content, created_at, author, photos)')
     .eq('author', userId);
     return data;
   }
@@ -42,7 +42,7 @@ export default function ProfileContent({activeTab,userId}) {
       {activeTab === 'posts' && (
       <div>
         {posts.length > 0 && posts.map(post => (
-          <PostCard {...post} profiles={profile} />
+          <PostCard key={post.created_at} {...post} profiles={profile} />
         ))}
 
       </div>

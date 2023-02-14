@@ -40,7 +40,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
              shared a post
           </p>
           <p className="text-gray-500 text-sm">
-            <ReactTimeAgo date={created_at} />
+            <ReactTimeAgo date={(new Date(created_at)).getTime()} />
             </p>
         </div>
         <div>
@@ -100,7 +100,7 @@ export default function PostCard({content,created_at,photos,profiles:authorProfi
           <div className="flex gap-4">
           {photos.map(photo => (
             // eslint-disable-next-line react/jsx-key
-            <div className="">
+            <div key={photos} className="">
               <img src={photo} className="rounded-md" alt=""/>
             </div>
           ))}

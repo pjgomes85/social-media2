@@ -22,7 +22,7 @@ export default function ProfilePage() {
   const session = useSession();
   const supabase = useSupabaseClient();
   const userId = router.query.id;
-  console.log({router})
+  
 
   useEffect(() => {
     if (!userId) {
