@@ -224,7 +224,9 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <Avatar url={comment.profiles.avatar} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
               <Link href={'/profile/'+ comment.profiles.id}>
-                {comment.profiles.name} <br />
+                <span className="hover:underline">
+                  {comment.profiles.name} <br />
+                </span>
               </Link>
               <p className="text-sm">{comment.content}</p>
             </div>
