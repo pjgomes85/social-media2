@@ -74,7 +74,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   }
 
   function postComment(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
     supabase.from('posts')
     .insert({
       content: commentText,
@@ -82,7 +82,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
       parent: id,
     })
     .then(result => {
-      console.log(result)
+      fetchComments();
     })
   }
 
@@ -224,7 +224,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <Avatar url={comment.profiles.avatar} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
               {comment.profiles.name} <br />
-              {comment.content}
+              <p className="text-sm">{comment.content}</p>
             </div>
           </div>
         ))}
