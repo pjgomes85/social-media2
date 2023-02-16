@@ -16,13 +16,17 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   const supabase = useSupabaseClient();
 
   useEffect(() => {
+    fetchLikes()
+  }, []);
+
+  function fetchLikes() {
     supabase.from('likes')
     .select()
     .eq('post_id', id)
     .then(result =>
       setLikes(result.data)
     )
-  }, []);
+  }
 
   function openDropdown(e) {
     e.stopPropagation();
@@ -48,7 +52,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
       user_id: myProfile.id,
         })
     .then(result => {
-      console.log(result);
+      fetchLikes();
     })
   }
 
