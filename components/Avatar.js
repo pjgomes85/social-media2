@@ -24,7 +24,7 @@ export default function Avatar({size, url, editable,onChange}) {
   };
 
   return (
-    <div className={`${width} relative`}>
+    <div className={`${width} md:relative`}>
       <div className="rounded-full overflow-hidden">
         <img src={url} alt="" className="w-full"/>
       </div>

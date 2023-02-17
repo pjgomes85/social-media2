@@ -272,7 +272,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
         <div>
           <Avatar url={myProfile?.avatar} />
         </div>
-        <div className="border grow rounded-full relative">
+        <div className="border grow rounded-full md:relative">
           <form onSubmit={postComment}>
             <input
               value={commentText}
