@@ -83,6 +83,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     })
     .then(result => {
       fetchComments();
+      setCommentText('');
     })
   }
 
@@ -224,8 +225,8 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <Avatar url={comment.profiles.avatar} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
               <Link href={'/profile/'+ comment.profiles.id}>
-                <span className="hover:underline">
-                  {comment.profiles.name} <br />
+                <span className="block hover:underline font-semibold">
+                  {comment.profiles.name}
                 </span>
               </Link>
               <p className="text-sm">{comment.content}</p>
