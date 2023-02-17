@@ -221,14 +221,17 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
       </div>
       <div>
         {comments.length > 0 && comments.map(comment => (
-          <div className="mt-2 flex gap-2 items-center">
+          <div key={true} className="mt-2 flex gap-2 items-center">
             <Avatar url={comment.profiles.avatar} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
+              <div>
               <Link href={'/profile/'+ comment.profiles.id}>
-                <span className="block hover:underline font-semibold">
+                <span className="hover:underline font-semibold">
                   {comment.profiles.name}
                 </span>
               </Link>
+              <ReactTimeAgo date={(new Date(comment.created_at)).getTime()} />
+              </div>
               <p className="text-sm">{comment.content}</p>
             </div>
           </div>
