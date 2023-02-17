@@ -199,9 +199,6 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
         </div>
         )}
 
-        {/* <div className="rounded-nd  overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1562760157-c05fe30e2e8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" alt="" />
-        </div> */}
       </div>
       <div className="flex mt-4 gap-8">
         <button className="flex gap-2 items-center" onClick={toogleLike}>
@@ -210,12 +207,25 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
           </svg>
           {likes?.length}
         </button>
+
+        {!dropdownOpen && (
         <button className="flex gap-2 items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
           </svg>
           {comments.length}
         </button>
+          )}
+
+        {dropdownOpen && (
+        <button className="flex gap-2 items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
+          </svg>
+          {comments.length}
+        </button>
+          )}
+
         <button className="flex gap-2 items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -223,7 +233,8 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
           3
         </button>
       </div>
-
+      <ClickOutHandler onClickOut={handleClickOutsideDropdown}>
+      {dropdownOpen && (
       <div>
         {comments.length > 0 && comments.map(comment => (
           <div  className="mt-2 flex gap-2 items-center">
@@ -241,10 +252,11 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
               </div>
               <p className="text-sm">{comment.content}</p>
             </div>
+
           </div>
         ))}
       </div>
-
+      )}
       <div className="flex mt-4 gap-3">
         <div>
           <Avatar url={myProfile?.avatar} />
@@ -256,7 +268,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
               onChange={ev => setCommentText(ev.target.value)}
               className="block w-full p-3 h-12 px-4 overflow-hidden rounded-full" placeholder="Leave comment"/>
           </form>
-          
+
           <label className="absolute top-3 right-3 text-gray-500">
           <input type="file" className="hidden" onChange={addPhotos}/>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -264,9 +276,20 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
             </svg>
           </label>
-
         </div>
       </div>
+
+      </ClickOutHandler>
+      {/* {upload.length > 0 && (
+        <div className="flex gap-2 ml-20">
+          {upload.map(uploads => (
+            // eslint-disable-next-line react/jsx-key
+            <div className="mt-2">
+              <img src={uploads} alt="" className="w-auto h-24 rounded-md" />
+            </div>
+          ))}
+        </div>
+      )} */}
     </Card>
   );
 }
