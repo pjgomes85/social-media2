@@ -223,31 +223,10 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
           3
         </button>
       </div>
-      <div className="flex mt-4 gap-3">
-        <div>
-          <Avatar url={myProfile?.avatar} />
-        </div>
-        <div className="border grow rounded-full relative">
-          <form onSubmit={postComment}>
-            <input
-              value={commentText}
-              onChange={ev => setCommentText(ev.target.value)}
-              className="block w-full p-3 h-12 px-4 overflow-hidden rounded-full" placeholder="Leave comment"/>
-          </form>
-          <label className="absolute top-3 right-3 text-gray-500">
-          <input type="file" className="hidden" onChange={addPhotos}/>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
-            </svg>
 
-          </label>
-
-        </div>
-      </div>
       <div>
         {comments.length > 0 && comments.map(comment => (
-          <div key={Comment} className="mt-2 flex gap-2 items-center">
+          <div  className="mt-2 flex gap-2 items-center">
             <Avatar url={comment.profiles.avatar} href={'/profile/'+ comment.profiles.id} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
               <div>
@@ -261,19 +240,32 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
               </span>
               </div>
               <p className="text-sm">{comment.content}</p>
-              {upload.length > 0 && (
-                <div className="flex gap-2">
-                  {upload.map(uploads => (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="mt-2">
-                      <img src={uploads} alt="" className="w-auto h-24 rounded-md" />
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="flex mt-4 gap-3">
+        <div>
+          <Avatar url={myProfile?.avatar} />
+        </div>
+        <div className="border grow rounded-full relative">
+          <form onSubmit={postComment}>
+            <input
+              value={commentText}
+              onChange={ev => setCommentText(ev.target.value)}
+              className="block w-full p-3 h-12 px-4 overflow-hidden rounded-full" placeholder="Leave comment"/>
+          </form>
+          
+          <label className="absolute top-3 right-3 text-gray-500">
+          <input type="file" className="hidden" onChange={addPhotos}/>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+            </svg>
+          </label>
+
+        </div>
       </div>
     </Card>
   );
