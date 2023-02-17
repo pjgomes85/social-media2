@@ -10,9 +10,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { comment } from "postcss";
 
 
-export default function PostCard({id,content,created_at,photos,profiles:authorProfile}) {
+export default function PostCard({comment, id,content,created_at,photos,profiles:authorProfile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [dropdownOpen1, setDropdownOpen1] = useState(false);
+  const [commentOpen, setCommentOpen] = useState(false);
   const {profile:myProfile} = useContext(UserContext);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
@@ -50,15 +50,16 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     setDropdownOpen(false);
   }
 
-  function handleClickOutsideDropdown1(e) {
+  function openComment(e) {
     e.stopPropagation();
-    setDropdownOpen1(false);
+    setCommentOpen(true)
   }
 
-  function openDropdown1(e) {
+  function handleClickOutsideDropdown1(e) {
     e.stopPropagation();
-    setDropdownOpen1(true)
+    setCommentOpen(false);
   }
+
 
   const isLikedByMe = !!likes.find(like =>
     like.user_id === myProfile?.id
@@ -219,8 +220,8 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
           {likes?.length}
         </button>
 
-        {!dropdownOpen1 && (
-        <button className="flex gap-2 items-center" onClick={openDropdown1}>
+        {!commentOpen && (
+        <button className="flex gap-2 items-center" onClick={openComment}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
           </svg>
@@ -228,7 +229,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
         </button>
           )}
 
-        {dropdownOpen1 && (
+        {commentOpen && (
         <button className="flex gap-2 items-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
@@ -245,10 +246,10 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
         </button>
       </div>
       <ClickOutHandler onClickOut={handleClickOutsideDropdown1}>
-      {dropdownOpen1 && (
+      {commentOpen && (
       <div>
         {comments.length > 0 && comments.map(comment => (
-          <div  className="mt-2 flex gap-2 items-center">
+          <div key={comment.id} className="mt-2 flex gap-2 items-center">
             <Avatar url={comment.profiles.avatar} href={'/profile/'+ comment.profiles.id} />
             <div className="bg-gray-300 py-2 px-4 rounded-xl">
               <div>
@@ -263,7 +264,6 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
               </div>
               <p className="text-sm">{comment.content}</p>
             </div>
-
           </div>
         ))}
       </div>
