@@ -31,8 +31,9 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     .then(result => setComments(result.data))
   }
 
-  function savePosts() {
-    supabase.from('save_posts').insert({
+  function savePost() {
+    supabase.from('save_posts')
+    .insert({
       user_id:myProfile.id,
       post_id:id,
     }).then(result => console.log(result));
@@ -150,7 +151,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
              shared a post
           </p>
           <p className="text-gray-500 text-sm">
-            {/* <ReactTimeAgo date={(new Date(created_at)).getTime()} /> */}
+            <ReactTimeAgo date={(new Date(created_at)).getTime()} />
             </p>
         </div>
         <div>
@@ -172,7 +173,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <div className="relative">
               {dropdownOpen && (
                 <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                  <button onClick={savePosts} href="" className="w-full -my-2 " >
+                  <button onClick={savePost} href="" className="w-full -my-2 " >
                     <span className="flex  gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
