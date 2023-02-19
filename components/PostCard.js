@@ -7,10 +7,9 @@ import ReactTimeAgo from "react-time-ago";
 import React from 'react';
 import { UserContext } from "./contexts/UserContext";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { comment } from "postcss";
 
 
-export default function PostCard({comment, id,content,created_at,photos,profiles:authorProfile}) {
+export default function PostCard({id,content,created_at,photos,profiles:authorProfile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
   const {profile:myProfile} = useContext(UserContext);
@@ -33,7 +32,10 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
   }
 
   function savePosts() {
-
+    supabase.from('save_posts').insert({
+      user_id:myProfile.id,
+      post_id:id,
+    }).then(result => console.log(result));
   }
 
   function fetchLikes() {
@@ -65,7 +67,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
   }
 
 
-  const isLikedByMe = !!likes.find(like =>
+  const isLikedByMe = !!likes?.find(like =>
     like.user_id === myProfile?.id
   )
 
@@ -140,7 +142,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
         </div>
         <div className="grow">
           <p>
-            <Link href={'/profile/'+authorProfile.id}>
+            <Link href={'/profile/'+authorProfile?.id}>
               <span className="mr-1 font-semibold cursor-pointer hover:underline">
                 {authorProfile?.name}
               </span>
@@ -148,7 +150,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
              shared a post
           </p>
           <p className="text-gray-500 text-sm">
-            <ReactTimeAgo date={(new Date(created_at)).getTime()} />
+            {/* <ReactTimeAgo date={(new Date(created_at)).getTime()} /> */}
             </p>
         </div>
         <div>
@@ -170,7 +172,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
             <div className="relative">
               {dropdownOpen && (
                 <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                  <button href="" className=" w-full " >
+                  <button onClick={savePosts} href="" className="w-full -my-2 " >
                     <span className="flex  gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
@@ -232,7 +234,7 @@ export default function PostCard({comment, id,content,created_at,photos,profiles
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
           </svg>
-          {comments.length}
+          {comments?.length}
         </button>
           )}
 
