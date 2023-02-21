@@ -32,7 +32,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   }
 
   function savePost() {
-    supabase.from('save_posts')
+    supabase.from('saved_posts')
     .insert({
       user_id:myProfile.id,
       post_id:id,
@@ -86,7 +86,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     supabase.from('likes')
     .insert({
       post_id: id,
-      user_id: myProfile.id,
+      user_id: myProfile?.id,
         })
     .then(result => {
       fetchLikes();
