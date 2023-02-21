@@ -15,6 +15,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   const {profile:myProfile} = useContext(UserContext);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
+  const [saved, setSaved] = useState(false);
   const [upload, setUpload] = useState([]);
   const [commentText, setCommentText] = useState('');
   const supabase = useSupabaseClient();
@@ -22,6 +23,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   useEffect(() => {
     fetchLikes()
     fetchComments()
+
   }, []);
 
   function fetchComments() {
@@ -37,6 +39,17 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
       user_id:myProfile.id,
       post_id:id,
     }).then(result => console.log(result));
+  }
+
+  function fetchIsSaved() {
+    supabase.from('saved_posts').select().eq('post_id', id).eq('user_id', myProfile.id)
+    .then(result => {
+      if (result.data.length > 0 ) {
+        setSaved(true)
+      } else {
+        setSaved(false)
+      }
+    })
   }
 
   function fetchLikes() {
