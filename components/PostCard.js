@@ -15,16 +15,16 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   const {profile:myProfile} = useContext(UserContext);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
-  const [saved, setSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [upload, setUpload] = useState([]);
   const [commentText, setCommentText] = useState('');
   const supabase = useSupabaseClient();
 
   useEffect(() => {
-    fetchLikes()
-    fetchComments()
-
-  }, []);
+    fetchLikes();
+    fetchComments();
+    if (myProfile?.id) fetchIsSaved();
+  }, [myProfile?.id]);
 
   function fetchComments() {
     supabase.from('posts')
@@ -33,21 +33,33 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     .then(result => setComments(result.data))
   }
 
-  function savePost() {
-    supabase.from('saved_posts')
+  function toogleSave() {
+    if (isSaved) {
+      supabase.from('saved_posts').delete().eq('post_id', id).eq('user_id', myProfile.id)
+      .then(result => {
+        setIsSaved(false);
+        setDropdownOpen(false);
+      })
+    }
+    if (!isSaved) {
+      supabase.from('saved_posts')
     .insert({
       user_id:myProfile.id,
       post_id:id,
-    }).then(result => console.log(result));
+    }).then(result => {
+      setIsSaved(true);
+      setDropdownOpen(false);
+    });
+    }
   }
 
   function fetchIsSaved() {
-    supabase.from('saved_posts').select().eq('post_id', id).eq('user_id', myProfile.id)
+    supabase.from('saved_posts').select().eq('post_id', id).eq('user_id', myProfile?.id)
     .then(result => {
-      if (result.data.length > 0 ) {
-        setSaved(true)
+      if (result.data?.length > 0 ) {
+        setIsSaved(true)
       } else {
-        setSaved(false)
+        setIsSaved(false)
       }
     })
   }
@@ -186,12 +198,20 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <div className="relative">
               {dropdownOpen && (
                 <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                  <button onClick={savePost} href="" className="w-full -my-2 " >
+                  <button onClick={toogleSave} href="" className="w-full -my-2 " >
                     <span className="flex  gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      {isSaved && (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 3l1.664 1.664M21 21l-1.5-1.5m-5.485-1.242L12 17.25 4.5 21V8.742m.164-4.078a2.15 2.15 0 011.743-1.342 48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185V19.5M4.664 4.664L19.5 19.5" />
+                        </svg>
+                      )}
+                      {!isSaved && (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
                       </svg>
-                    Save Posts
+
+                      )}
+                      {isSaved ? 'Remove from Saved' : 'Save Post'}
                     </span>
                   </button>
                   <a href="" className='flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500'>

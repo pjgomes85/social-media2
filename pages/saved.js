@@ -21,7 +21,7 @@ export default function SavedPosts() {
       supabase.from('posts').select('*, profiles(*)').in('id', postIds)
       .then(result => setPosts(result.data))
     })
-  }, []);
+  }, [session?.user?.id]);
 
   return (
     <Layout>
