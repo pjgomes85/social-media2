@@ -97,6 +97,11 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     like.user_id === myProfile?.id
   )
 
+
+  const handleNotification = () => {
+    toogleLike(true)
+  }
+
   function toogleLike() {
     if (isLikedByMe) {
       supabase.from('likes').delete()

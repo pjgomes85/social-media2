@@ -6,7 +6,6 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect, useState } from "react";
 import Login from "./login";
 
-// import { Inter } from '@next/font/google'
 
 
 export default function Home() {
@@ -14,6 +13,8 @@ export default function Home() {
   const [posts,setPosts] = useState([]);
   const session = useSession();
   const [profile,setProfile] = useState(null);
+
+
 
   useEffect(() => {
     fetchPosts();
