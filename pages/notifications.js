@@ -51,7 +51,7 @@ export default function NotificationsPage({profiles:authorProfile}) {
 
             {posts?.length > 0 && posts.map(post => (
         <div key={post.id}>
-          <Link {...post} href={'/profile'} className="font-semibold mr-1 hover:underline">{post.author}</Link>
+          <Link {...post} href={'/profile'} className="font-semibold mr-1 hover:underline">{post.author.toString()}</Link>
         </div>
       ))}
 
