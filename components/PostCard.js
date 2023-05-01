@@ -12,7 +12,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 export default function PostCard({id,content,created_at,photos,profiles:authorProfile}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
-  const {profile:myProfile} = useContext(UserContext);
+  const { profile: myProfile } = useContext(UserContext);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
   const [isSaved, setIsSaved] = useState(false);
@@ -27,56 +27,67 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
   }, [myProfile?.id]);
 
   function fetchComments() {
-    supabase.from('posts')
-    .select('*, profiles(*)')
-    .eq('parent', id)
-    .then(result => setComments(result.data))
+    supabase
+      .from('posts')
+      .select('*, profiles(*)')
+      .eq('parent', id)
+      .then((result) => setComments(result.data));
   }
 
-  function toogleSave() {
+  function toggleSave() {
     if (isSaved) {
-      supabase.from('saved_posts').delete().eq('post_id', id).eq('user_id', myProfile.id)
-      .then(result => {
-        setIsSaved(false);
-        setDropdownOpen(false);
-      })
+      supabase
+        .from('saved_posts')
+        .delete()
+        .eq('post_id', id)
+        .eq('user_id', myProfile.id)
+        .then((result) => {
+          setIsSaved(false);
+          setDropdownOpen(false);
+        });
     }
     if (!isSaved) {
-      supabase.from('saved_posts')
-    .insert({
-      user_id:myProfile.id,
-      post_id:id,
-    }).then(result => {
-      setIsSaved(true);
-      setDropdownOpen(false);
-    });
+      supabase
+        .from('saved_posts')
+        .insert({
+          user_id: myProfile.id,
+          post_id: id,
+        })
+        .then((result) => {
+          setIsSaved(true);
+          setDropdownOpen(false);
+        });
     }
   }
 
   function fetchIsSaved() {
-    supabase.from('saved_posts').select().eq('post_id', id).eq('user_id', myProfile?.id)
-    .then(result => {
-      if (result.data?.length > 0 ) {
-        setIsSaved(true)
-      } else {
-        setIsSaved(false)
-      }
-    })
+    supabase
+      .from('saved_posts')
+      .select()
+      .eq('post_id', id)
+      .eq('user_id', myProfile?.id)
+      .then((result) => {
+        if (result.data?.length > 0) {
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+        }
+      });
   }
 
   function fetchLikes() {
-    supabase.from('likes')
-    .select()
-    .eq('post_id', id)
-    .then(result =>
-      setLikes(result.data)
-    )
+    supabase
+      .from('likes')
+      .select()
+      .eq('post_id', id)
+      .then((result) => setLikes(result.data));
   }
 
   function openDropdown(e) {
     e.stopPropagation();
-    setDropdownOpen(true)
+    setDropdownOpen(true);
   }
+
   function handleClickOutsideDropdown(e) {
     e.stopPropagation();
     setDropdownOpen(false);
@@ -84,7 +95,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
 
   function openComment(e) {
     e.stopPropagation();
-    setCommentOpen(true)
+    setCommentOpen(true);
   }
 
   function handleClickOutsideDropdown1(e) {
@@ -92,50 +103,50 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
     setCommentOpen(false);
   }
 
-
-  const isLikedByMe = !!likes?.find(like =>
-    like.user_id === myProfile?.id
-  )
-
+  const isLikedByMe = !!likes?.find((like) => like.user_id === myProfile?.id);
 
   const handleNotification = () => {
-    toogleLike(true)
-  }
+    toggleLike(true);
+  };
 
-  function toogleLike() {
+  function toggleLike() {
     if (isLikedByMe) {
-      supabase.from('likes').delete()
-      .eq('post_id', id)
-      .eq('user_id', myProfile.id)
-      .then(result => {
-        console.log("deleted result", result)
-        fetchLikes();
-      })
+      supabase
+        .from('likes')
+        .delete()
+        .eq('post_id', id)
+        .eq('user_id', myProfile.id)
+        .then((result) => {
+          console.log('deleted result', result);
+          fetchLikes();
+        });
       return;
     }
-    supabase.from('likes')
-    .insert({
-      post_id: id,
-      user_id: myProfile?.id,
-        })
-    .then(result => {
-      fetchLikes();
-    })
+    supabase
+      .from('likes')
+      .insert({
+        post_id: id,
+        user_id: myProfile?.id,
+      })
+      .then((result) => {
+        fetchLikes();
+      });
   }
 
   function postComment(ev) {
     ev.preventDefault();
-    supabase.from('posts')
-    .insert({
-      content: commentText,
-      author: myProfile?.id,
-      parent: id,
-    })
-    .then(result => {
-      fetchComments();
-      setCommentText('');
-      setUpload([]);
-    })
+    supabase
+      .from('posts')
+      .insert({
+        content: commentText,
+        author: myProfile?.id,
+        parent: id,
+      })
+      .then((result) => {
+        fetchComments();
+        setCommentText('');
+        setUpload([]);
+      });
   }
 
   async function addPhotos(ev) {
@@ -204,7 +215,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <div className="relative">
               {dropdownOpen && (
                 <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                  <button onClick={handleLike} href="" className="w-full -my-2 " >
+                  <button onClick={toggleLike} href="" className="w-full -my-2 " >
                     <span className="flex  gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500">
                       {isSaved && (
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -262,7 +273,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
 
       </div>
       <div className="flex mt-4 gap-8">
-        <button className="flex gap-2 items-center" onClick={toogleLike}>
+        <button className="flex gap-2 items-center" onClick={toggleLike}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={"w-6 h-6 " + (isLikedByMe ? `fill-red-500` : '')}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
           </svg>
