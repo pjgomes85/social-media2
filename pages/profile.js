@@ -146,6 +146,7 @@ export default function ProfilePage() {
         </Card>
         <ProfileContent activeTab={tab} userId={userId} />
         </UserContextProvider>
+        
     </Layout>
 
   );

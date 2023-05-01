@@ -161,6 +161,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
 
 
 
+
   return (
     <Card>
       <div className="flex gap-3">
@@ -203,7 +204,7 @@ export default function PostCard({id,content,created_at,photos,profiles:authorPr
             <div className="relative">
               {dropdownOpen && (
                 <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                  <button onClick={toogleSave} href="" className="w-full -my-2 " >
+                  <button onClick={handleLike} href="" className="w-full -my-2 " >
                     <span className="flex  gap-3 py-2 my-2 hover:bg-socialBlue hover:text-white -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-500">
                       {isSaved && (
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
